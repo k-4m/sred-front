@@ -1,0 +1,55 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "es7",
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "resolveJsonModule": true,
+        "downlevelIteration": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "pretty": true,
+        "jsx": "react",
+        "outDir": "./build"
+    },
+    "baseUrl": "./",
+    "paths": {
+        "*": [
+            "./node_modules/@types/*",
+            "/usr/lib/node_modules/*",
+            "/usr/lib/node_modules/@types/*",
+            "*"
+        ]
+    },
+    "typeRoots": [
+        "./node_modules/@types",
+        "./declare.d"
+    ],
+    "include": [
+        "./__mocks__",
+        "./src",
+        "./declare.d/*",
+        "src/mobile/views/components/ContinueShoppingButton",
+        "src/mobile/store/testing/.ts"
+    ],
+    "exclude": [
+        "**/*.spec.tsx?",
+        "build"
+    ]
+}
