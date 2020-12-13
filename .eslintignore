@@ -6,3 +6,4 @@ wds.static
 webpack.config.js
 styleguide.config.js
 styleguide.wrapper.js
+config/
