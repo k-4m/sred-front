@@ -11,7 +11,7 @@ export const Layout: React.FC = () => (
       <Box margin='medium' flex='shrink'>
         <LeftPane />
       </Box>
-      <Box flex overflow='scroll' fill>
+      <Box flex overflow={{ vertical: 'scroll' }} fill>
         <RightPane />
       </Box>
     </Box>
