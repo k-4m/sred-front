@@ -5,10 +5,10 @@ import { SSImage } from './SSImage';
 type tSSIdentifierProps = {
   image: string;
   name: string;
-  typeName: string;
+  device: string;
 };
 
-export const SSIdentifier: React.FC<tSSIdentifierProps> = ({ image, name, typeName }) => (
+export const SSIdentifier: React.FC<tSSIdentifierProps> = ({ image, name, device: typeName }) => (
   <Box gap='small' align='center' direction='row' pad='small'>
     <SSImage image={image} />
     <Box>

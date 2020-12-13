@@ -1,10 +1,11 @@
 import { Scenario } from './Scenario';
-import { eFieldType, iSmartThing } from './types';
+import { eFieldType, iSmartThing, tDeviceProperty } from './types';
 
 export type tSmartThingConfig<Command> = {
-  name: string;
-  icon: string;
+  device: string;
   allowedCommands: Command[];
+  icon: string;
+  name: string;
 };
 
 export type tCommand = {
@@ -40,8 +41,10 @@ export class SmartThing<Command extends tCommand> implements iSmartThing {
 
   getViewData() {
     return {
-      typeName: this.config.name,
+      name: this.config.name,
+      device: this.config.device,
       icon: this.config.icon,
+      properties: [] as tDeviceProperty[],
     };
   }
 }

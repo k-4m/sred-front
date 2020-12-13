@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, ResponsiveContext } from 'grommet';
 import React from 'react';
+import { Lamp } from '../entities/Lamp';
 import { SSAddNew } from './Widget/SSAddNew';
 import { SSWidget } from './Widget/SSWidget';
+
+const lamp = new Lamp();
 
 export const RightPane: React.FC = () => {
   const size = React.useContext(ResponsiveContext);
@@ -16,11 +19,9 @@ export const RightPane: React.FC = () => {
 
   return (
     <Box direction='row-responsive' wrap flex='grow' justify='center' align='stretch'>
-      {Array.from({ length: 9 }).map((i) => (
-        <Box {...flexConfig} key={i} margin='medium'>
-          <SSWidget name={'L1'} typeName='smart lamp' />
-        </Box>
-      ))}
+      <Box {...flexConfig} margin='medium'>
+        <SSWidget data={lamp.getViewData()} />
+      </Box>
       <Box {...flexConfig} margin='medium'>
         <SSAddNew />
       </Box>

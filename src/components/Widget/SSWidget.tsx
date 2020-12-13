@@ -1,32 +1,38 @@
-import { Box, Text } from 'grommet';
+import { Box } from 'grommet';
 import React from 'react';
-import Lamp from './images/lamp/light-on.png';
+import { ePropertiesView, tDeviceProperty, tWidgetData } from '../../entities/types';
+import { PropertyAsCheckbox } from './propertiesViews/PropertyAsCheckbox';
+import { PropertyAsColor } from './propertiesViews/PropertyAsColor';
+import { PropertyAsSlider } from './propertiesViews/PropertyAsSlider';
+import { PropertyAsText } from './propertiesViews/PropertyAsText';
+import { PropertyContainer } from './propertiesViews/PropertyContainer';
 import { SSIdentifier } from './SSIdentifier';
 
 type tWidgetProps = {
-  name: string;
-  typeName: string;
+  data: tWidgetData;
 };
 
-export const SSWidget: React.FC<tWidgetProps> = ({ name, typeName, children }) => (
+const getPropertyView = (p: tDeviceProperty) => {
+  const View = {
+    [ePropertiesView.CHECKBOX]: PropertyAsCheckbox,
+    [ePropertiesView.COLOR]: PropertyAsColor,
+    [ePropertiesView.SLIDER]: PropertyAsSlider,
+  }[p.displayAs] || PropertyAsText;
+
+  return <View property={p} />;
+};
+
+export const SSWidget: React.FC<tWidgetProps> = ({ data }) => (
   <Box pad='medium' background='white' elevation='large' round fill>
-    <Box gap='large'>
-      <Box gap='xsmall'>
-        <SSIdentifier name={name} typeName={typeName} image={Lamp} />
-      </Box>
-      <Box gap='medium'>
-        {children}
-        <Box direction='row' align='center'>
-          <Text color='dark-1' size='small' margin={{ left: 'xsmall' }}>
-            Lorem ipsum dolor sit amet, consectetur adipis
-          </Text>
-        </Box>
-        <Box direction='row' align='center'>
-          <Text color='dark-1' size='small' margin={{ left: 'xsmall' }}>
-            Lorem ipsum dolor sit amet, consectetur
-          </Text>
-        </Box>
-      </Box>
+    <Box gap='xsmall'>
+      <SSIdentifier name={data.name} device={data.device} image={data.icon} />
+    </Box>
+    <Box direction='row' justify='start' gap='small' wrap>
+      {data.properties.map((p) => (
+        <PropertyContainer label={p.name} key={p.name}>
+          {getPropertyView(p)}
+        </PropertyContainer>
+      ))}
     </Box>
   </Box>
 );

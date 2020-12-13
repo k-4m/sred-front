@@ -4,8 +4,16 @@ export interface iSmartThing {
 }
 
 export type tWidgetData = {
-  typeName: string;
+  name: string;
+  device: string;
   icon: string;
+  properties: tDeviceProperty[];
+};
+
+export type tDeviceProperty = {
+  name: string;
+  value: unknown;
+  displayAs: ePropertiesView;
 };
 
 export type tFieldConfig = {
@@ -18,4 +26,11 @@ export enum eFieldType {
   STRING,
   NUMBER,
   BOOLEAN,
+}
+
+export enum ePropertiesView {
+  CHECKBOX,
+  SLIDER,
+  TEXT,
+  COLOR,
 }
