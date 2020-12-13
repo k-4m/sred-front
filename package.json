@@ -103,7 +103,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "eslint --fix . && prettier --write src"
+      "pre-push": "eslint --fix src && prettier --write src"
     }
   }
 }
