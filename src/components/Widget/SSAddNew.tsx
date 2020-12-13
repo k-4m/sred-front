@@ -7,16 +7,7 @@ type tSSAddNewProps = {
 };
 
 export const SSAddNew: React.FC<tSSAddNewProps> = () => (
-  <Box
-    direction='row'
-    justify='between'
-    gap='large'
-    pad='medium'
-    background='white'
-    elevation='large'
-    round
-    align='center'
-  >
+  <Box pad='medium' background='white' elevation='large' round align='center' fill>
     <Box pad='large' margin='auto'>
       <Add size='large' />
     </Box>

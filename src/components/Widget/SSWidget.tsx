@@ -9,7 +9,7 @@ type tWidgetProps = {
 };
 
 export const SSWidget: React.FC<tWidgetProps> = ({ name, typeName, children }) => (
-  <Box pad='medium' background='white' elevation='large' round>
+  <Box pad='medium' background='white' elevation='large' round fill>
     <Box gap='large'>
       <Box gap='xsmall'>
         <SSIdentifier name={name} typeName={typeName} image={Lamp} />
