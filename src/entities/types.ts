@@ -1,26 +1,11 @@
-export interface iSmartThing {
-  getFields(): tFieldConfig[];
-  getViewData(): tWidgetData;
+import { Property } from './Property';
+
+export interface iSmartThing<T = unknown> {
+  getProperties(): Property<T>[];
+  getIcon(): string;
+  getName(): string;
+  getDevice(): string;
 }
-
-export type tWidgetData = {
-  name: string;
-  device: string;
-  icon: string;
-  properties: tDeviceProperty[];
-};
-
-export type tDeviceProperty = {
-  name: string;
-  value: unknown;
-  displayAs: ePropertiesView;
-};
-
-export type tFieldConfig = {
-  name: string;
-  displayName: string;
-  type: eFieldType;
-};
 
 export enum eFieldType {
   STRING,
@@ -34,3 +19,13 @@ export enum ePropertiesView {
   TEXT,
   COLOR,
 }
+
+export enum eSmartThing {
+  LAMP = 'lamp',
+}
+
+export type tSmartThingConfig = {
+  icon: string;
+  name: string;
+  device: string;
+};

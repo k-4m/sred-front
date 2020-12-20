@@ -12,19 +12,15 @@ import {
   ThemeContext,
 } from 'grommet';
 import React from 'react';
+import { useStoreState } from '../store';
 
 type tEmojiTrackersProps = {
   // pass
 };
 
 export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
-  const data = [
-    { name: 'страх', value: Math.random() * 100 },
-    { name: 'страх', value: Math.random() * 100 },
-    { name: 'страх', value: Math.random() * 100 },
-    { name: 'страх', value: Math.random() * 100 },
-    { name: 'страх', value: Math.random() * 100 },
-  ];
+  const emotions = useStoreState((store) => store.emotion.current);
+  const sortedEmotions = Object.entries(emotions).sort(([, a], [, b]) => b - a);
 
   return (
     <ThemeContext.Extend
@@ -41,10 +37,10 @@ export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
         <CardBody pad='small'>
           <Table>
             <TableBody>
-              {data.map((datum) => (
-                <TableRow key={datum.name}>
+              {sortedEmotions.map(([emotion, value], i) => (
+                <TableRow key={emotion}>
                   <TableCell>
-                    <Text>{datum.name}</Text>
+                    <Text color={i === 0 ? 'status-ok' : 'status-unknown'}>{emotion}</Text>
                   </TableCell>
                   <TableCell>
                     <Meter
@@ -55,8 +51,10 @@ export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
                       round
                       values={[
                         {
-                          value: datum.value,
-                          color: 'brand',
+                          value,
+                          color: i > 0 ? 'status-unknown' : 'status-ok',
+                          label: value.toFixed(2),
+                          highlight: i === 0,
                         },
                       ]}
                     />

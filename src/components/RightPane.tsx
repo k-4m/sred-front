@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, ResponsiveContext } from 'grommet';
 import React from 'react';
-import { Lamp } from '../entities/Lamp';
+import { useStoreState } from '../store';
 import { SSAddNew } from './Widget/SSAddNew';
 import { SSWidget } from './Widget/SSWidget';
 
-const lamp = new Lamp();
-
 export const RightPane: React.FC = () => {
+  const things = useStoreState((store) => store.room.things);
   const size = React.useContext(ResponsiveContext);
   const flexConfig = size !== 'small'
     ? {
@@ -19,9 +18,12 @@ export const RightPane: React.FC = () => {
 
   return (
     <Box direction='row-responsive' wrap flex='grow' justify='center' align='stretch'>
-      <Box {...flexConfig} margin='medium'>
-        <SSWidget data={lamp.getViewData()} />
-      </Box>
+      {things.map((t) => (
+        <Box {...flexConfig} margin='medium' key={t.getName()}>
+          <SSWidget thing={t} />
+        </Box>
+      ))}
+
       <Box {...flexConfig} margin='medium'>
         <SSAddNew />
       </Box>

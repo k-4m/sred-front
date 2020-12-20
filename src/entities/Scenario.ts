@@ -1,12 +1,11 @@
 import { eEmotion } from '../store/types';
-import { tCommand } from './SmartThing';
 
-export class Scenario<C extends tCommand> {
+export class Scenario {
   trigger: eEmotion;
 
-  command: C;
+  command: string;
 
-  constructor(trigger: eEmotion, command: C) {
+  constructor(trigger: eEmotion, command: string) {
     this.trigger = trigger;
     this.command = command;
   }

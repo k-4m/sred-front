@@ -1,50 +1,30 @@
-import { Scenario } from './Scenario';
-import { eFieldType, iSmartThing, tDeviceProperty } from './types';
+import { Property } from './Property';
+import { iSmartThing, tSmartThingConfig } from './types';
 
-export type tSmartThingConfig<Command> = {
-  device: string;
-  allowedCommands: Command[];
-  icon: string;
-  name: string;
-};
+export class SmartThing implements iSmartThing {
+  config: tSmartThingConfig;
 
-export type tCommand = {
-  id: string;
-};
+  properties: Record<string, Property> = {};
 
-export class SmartThing<Command extends tCommand> implements iSmartThing {
-  scenarios: Scenario<Command>[] = [];
-
-  config: tSmartThingConfig<Command>;
-
-  constructor(config: tSmartThingConfig<Command>) {
+  constructor(config: tSmartThingConfig) {
     this.config = config;
   }
 
-  addScenario(scenario: Scenario<Command>) {
-    this.scenarios.push(scenario);
+  getName() {
+    return this.config.name;
   }
 
-  removeScenario(scenario: Scenario<Command>) {
-    this.scenarios.splice(this.scenarios.indexOf(scenario), 1);
+  getIcon() {
+    return this.config.icon;
   }
 
-  getFields() {
-    return [
-      {
-        type: eFieldType.STRING,
-        name: 'name',
-        displayName: 'Назва',
-      },
-    ];
+  getDevice() {
+    return this.config.device;
   }
 
-  getViewData() {
-    return {
-      name: this.config.name,
-      device: this.config.device,
-      icon: this.config.icon,
-      properties: [] as tDeviceProperty[],
-    };
+  getProperties() {
+    return Object.keys(this.properties)
+      .sort((a, b) => a.localeCompare(b))
+      .map((p) => this.properties[p]);
   }
 }

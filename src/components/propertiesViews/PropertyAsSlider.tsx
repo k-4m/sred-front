@@ -2,10 +2,10 @@ import {
   Box, Meter, Stack, Text,
 } from 'grommet';
 import React from 'react';
-import { tDeviceProperty } from '../../../entities/types';
+import { Property } from '../../entities/Property';
 
 type tPropertyAsSliderProps = {
-  property: tDeviceProperty;
+  property: Property<number>;
 };
 
 export const PropertyAsSlider: React.FC<tPropertyAsSliderProps> = ({ property }) => (
@@ -13,12 +13,12 @@ export const PropertyAsSlider: React.FC<tPropertyAsSliderProps> = ({ property })
     <Meter
       type='bar'
       round
-      values={[{ value: property.value as number, color: 'status-warning' }]}
+      values={[{ value: property.value, color: 'status-warning' }]}
       size='small'
       thickness='medium'
     />
     <Box direction='row' align='center' pad={{ bottom: 'xsmall' }}>
-      <Text>{property.value as string}</Text>
+      <Text>{property.value}</Text>
       <Text size='xsmall'>%</Text>
     </Box>
   </Stack>

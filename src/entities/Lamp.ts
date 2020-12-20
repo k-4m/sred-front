@@ -1,5 +1,6 @@
 import LampImgOff from '../components/Widget/images/lamp/light-off.png';
 import LampImgOn from '../components/Widget/images/lamp/light-on.png';
+import { Property } from './Property';
 import { SmartThing } from './SmartThing';
 import { ePropertiesView } from './types';
 
@@ -8,46 +9,52 @@ export enum eLampAction {
   TURN_OFF = 'turn-off',
 }
 
-export type tLampCommands = { id: eLampAction.TURN_ON | eLampAction.TURN_OFF };
-
-type tLampProperties = {
+type tLampState = {
   on: boolean;
   color: string;
   brightness: number;
 };
-export class Lamp extends SmartThing<tLampCommands> {
-  properties: tLampProperties = { on: false, color: '#FC6956', brightness: 30 };
+export class Lamp extends SmartThing {
+  properties: Record<keyof tLampState, Property> = {
+    on: new Property('on', {
+      label: 'Стан',
+      type: ePropertiesView.CHECKBOX,
+      getValue: () => this.state.on,
+      update: this.update.bind(this),
+    }),
+    color: new Property('on', {
+      label: 'Колір',
+      type: ePropertiesView.COLOR,
+      getValue: () => this.state.color,
+      update: this.update.bind(this),
+    }),
+    brightness: new Property('on', {
+      label: 'Яскравість',
+      type: ePropertiesView.SLIDER,
+      getValue: () => this.state.brightness,
+      update: this.update.bind(this),
+    }),
+  };
+
+  state: tLampState = {
+    on: true,
+    color: '#000',
+    brightness: 0,
+  };
 
   constructor() {
     super({
-      allowedCommands: [],
       device: 'Розумна лампа від Xiomi',
       icon: LampImgOff,
       name: 'Лампочка на кухнє',
     });
   }
 
-  getViewData() {
-    return {
-      ...super.getViewData(),
-      icon: this.properties.on ? LampImgOn : LampImgOff,
-      properties: [
-        {
-          name: 'Ввімкнена',
-          value: this.properties.on,
-          displayAs: ePropertiesView.CHECKBOX,
-        },
-        {
-          name: 'Яскравість',
-          value: this.properties.brightness,
-          displayAs: ePropertiesView.SLIDER,
-        },
-        {
-          name: 'Колір',
-          value: this.properties.color,
-          displayAs: ePropertiesView.COLOR,
-        },
-      ],
-    };
+  update<T>(value: T, property: Property) {
+    this.state[property.id] = value;
+  }
+
+  getIcon() {
+    return this.state.on ? LampImgOn : LampImgOff;
   }
 }

@@ -1,11 +1,11 @@
 import { CheckBox } from 'grommet';
 import React from 'react';
-import { tDeviceProperty } from '../../../entities/types';
+import { Property } from '../../entities/Property';
 
 type tPropertyAsCheckboxProps = {
-  property: tDeviceProperty;
+  property: Property<boolean>;
 };
 
 export const PropertyAsCheckbox: React.FC<tPropertyAsCheckboxProps> = ({ property }) => (
-  <CheckBox checked={property.value as boolean} />
+  <CheckBox checked={property.value} />
 );

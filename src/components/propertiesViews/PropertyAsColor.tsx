@@ -1,11 +1,11 @@
 import { Box } from 'grommet';
 import React from 'react';
-import { tDeviceProperty } from '../../../entities/types';
+import { Property } from '../../entities/Property';
 
 type tPropertyAsColorProps = {
-  property: tDeviceProperty;
+  property: Property<string>;
 };
 
 export const PropertyAsColor: React.FC<tPropertyAsColorProps> = ({ property }) => (
-  <Box background={property.value as string} pad='small' />
+  <Box background={property.value} pad='small' />
 );

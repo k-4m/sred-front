@@ -1,38 +1,31 @@
-import { Box } from 'grommet';
+import { Box, Button } from 'grommet';
+import { Trash } from 'grommet-icons';
 import React from 'react';
-import { ePropertiesView, tDeviceProperty, tWidgetData } from '../../entities/types';
-import { PropertyAsCheckbox } from './propertiesViews/PropertyAsCheckbox';
-import { PropertyAsColor } from './propertiesViews/PropertyAsColor';
-import { PropertyAsSlider } from './propertiesViews/PropertyAsSlider';
-import { PropertyAsText } from './propertiesViews/PropertyAsText';
-import { PropertyContainer } from './propertiesViews/PropertyContainer';
+import { iSmartThing } from '../../entities/types';
+import { useStoreActions } from '../../store';
+import { PropertyContainer } from '../propertiesViews/PropertyContainer';
 import { SSIdentifier } from './SSIdentifier';
 
 type tWidgetProps = {
-  data: tWidgetData;
+  thing: iSmartThing;
 };
 
-const getPropertyView = (p: tDeviceProperty) => {
-  const View = {
-    [ePropertiesView.CHECKBOX]: PropertyAsCheckbox,
-    [ePropertiesView.COLOR]: PropertyAsColor,
-    [ePropertiesView.SLIDER]: PropertyAsSlider,
-  }[p.displayAs] || PropertyAsText;
+export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
+  const removeThing = useStoreActions((store) => store.room.remove);
 
-  return <View property={p} />;
+  return (
+    <Box pad='medium' background='white' elevation='large' round fill>
+      <Box gap='xsmall' direction='row' justify='between'>
+        <SSIdentifier thing={thing} />
+        <Button icon={<Trash />} color='status-error' hoverIndicator='light-1' onClick={() => removeThing(thing)} />
+      </Box>
+      <Box direction='row' justify='start' gap='small' wrap>
+        {thing.getProperties().map((p) => (
+          <PropertyContainer property={p} key={p.id}>
+            <p.view property={p} />
+          </PropertyContainer>
+        ))}
+      </Box>
+    </Box>
+  );
 };
-
-export const SSWidget: React.FC<tWidgetProps> = ({ data }) => (
-  <Box pad='medium' background='white' elevation='large' round fill>
-    <Box gap='xsmall'>
-      <SSIdentifier name={data.name} device={data.device} image={data.icon} />
-    </Box>
-    <Box direction='row' justify='start' gap='small' wrap>
-      {data.properties.map((p) => (
-        <PropertyContainer label={p.name} key={p.name}>
-          {getPropertyView(p)}
-        </PropertyContainer>
-      ))}
-    </Box>
-  </Box>
-);
