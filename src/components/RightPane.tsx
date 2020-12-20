@@ -19,7 +19,7 @@ export const RightPane: React.FC = () => {
   return (
     <Box direction='row-responsive' wrap flex='grow' justify='center' align='stretch'>
       {things.map((t) => (
-        <Box {...flexConfig} margin='medium' key={t.getName()}>
+        <Box {...flexConfig} margin='medium' key={t.getId()}>
           <SSWidget thing={t} />
         </Box>
       ))}

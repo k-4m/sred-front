@@ -16,11 +16,12 @@ const fetchUpdates = async (): Promise<tResponse> => {
   return response.json();
 };
 
-export const useFetchUpdates = (refetchInterval = 1000) => {
+// refetchInterval = undefined
+export const useFetchUpdates = () => {
   const updateStoreData = useStoreActions((store) => store.emotion.update);
 
   useQuery('updates', fetchUpdates, {
-    refetchInterval,
+    // refetchInterval,
     onSuccess: (response) => {
       updateStoreData({
         image: response.image,

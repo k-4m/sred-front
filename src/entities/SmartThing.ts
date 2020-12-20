@@ -1,13 +1,24 @@
 import { Property } from './Property';
-import { iSmartThing, tSmartThingConfig } from './types';
+import { ePropertiesView, iSmartThing, tSmartThingConfig } from './types';
 
 export class SmartThing implements iSmartThing {
   config: tSmartThingConfig;
 
-  properties: Record<string, Property> = {};
+  readonly id: number;
+
+  properties: Property[] = [
+    new Property('name', {
+      getValue: () => this.config.name,
+      label: 'Назва',
+      type: ePropertiesView.TEXT,
+      update: this.updateName.bind(this),
+      hidden: true,
+    }),
+  ];
 
   constructor(config: tSmartThingConfig) {
     this.config = config;
+    this.id = Date.now();
   }
 
   getName() {
@@ -23,8 +34,14 @@ export class SmartThing implements iSmartThing {
   }
 
   getProperties() {
-    return Object.keys(this.properties)
-      .sort((a, b) => a.localeCompare(b))
-      .map((p) => this.properties[p]);
+    return this.properties;
+  }
+
+  updateName(value: string) {
+    this.config.name = value;
+  }
+
+  getId() {
+    return this.id;
   }
 }

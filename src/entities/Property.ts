@@ -1,3 +1,4 @@
+import { EditTextProperty } from '../components/CreationForm/propertiesEdit/EditTextProperty';
 import { PropertyAsCheckbox } from '../components/propertiesViews/PropertyAsCheckbox';
 import { PropertyAsColor } from '../components/propertiesViews/PropertyAsColor';
 import { PropertyAsSlider } from '../components/propertiesViews/PropertyAsSlider';
@@ -9,6 +10,7 @@ export type tPropertyConfig<T> = {
   type: ePropertiesView;
   getValue: () => T;
   update: (value: T, property: Property<T>) => void;
+  hidden?: boolean;
 };
 
 export class Property<T = any> {
@@ -43,7 +45,11 @@ export class Property<T = any> {
       [ePropertiesView.CHECKBOX]: PropertyAsCheckbox,
       [ePropertiesView.COLOR]: PropertyAsColor,
       [ePropertiesView.SLIDER]: PropertyAsSlider,
-      [ePropertiesView.TEXT]: PropertyAsText,
+      [ePropertiesView.TEXT]: EditTextProperty,
     }[this.config.type] as unknown) as React.FC<{ property: Property<T> }>;
+  }
+
+  update(value: T) {
+    this.config.update(value, this);
   }
 }

@@ -27,6 +27,7 @@ export type tCreationForm = {
   open: Action<tCreationForm>;
   changeType: Action<tCreationForm, eSmartThing>;
   save: Thunk<tCreationForm, void, void, tAppModel>;
+  updateProperty: Action<tCreationForm, { id: string; value: unknown }>;
 };
 
 export type tRoomModel = {

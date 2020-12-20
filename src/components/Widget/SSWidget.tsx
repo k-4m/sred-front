@@ -20,11 +20,14 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
         <Button icon={<Trash />} color='status-error' hoverIndicator='light-1' onClick={() => removeThing(thing)} />
       </Box>
       <Box direction='row' justify='start' gap='small' wrap>
-        {thing.getProperties().map((p) => (
-          <PropertyContainer property={p} key={p.id}>
-            <p.view property={p} />
-          </PropertyContainer>
-        ))}
+        {thing
+          .getProperties()
+          .filter((p) => !p.config.hidden)
+          .map((p) => (
+            <PropertyContainer property={p} key={p.id}>
+              <p.view property={p} />
+            </PropertyContainer>
+          ))}
       </Box>
     </Box>
   );

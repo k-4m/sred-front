@@ -15,27 +15,6 @@ type tLampState = {
   brightness: number;
 };
 export class Lamp extends SmartThing {
-  properties: Record<keyof tLampState, Property> = {
-    on: new Property('on', {
-      label: 'Стан',
-      type: ePropertiesView.CHECKBOX,
-      getValue: () => this.state.on,
-      update: this.update.bind(this),
-    }),
-    color: new Property('on', {
-      label: 'Колір',
-      type: ePropertiesView.COLOR,
-      getValue: () => this.state.color,
-      update: this.update.bind(this),
-    }),
-    brightness: new Property('on', {
-      label: 'Яскравість',
-      type: ePropertiesView.SLIDER,
-      getValue: () => this.state.brightness,
-      update: this.update.bind(this),
-    }),
-  };
-
   state: tLampState = {
     on: true,
     color: '#000',
@@ -48,6 +27,27 @@ export class Lamp extends SmartThing {
       icon: LampImgOff,
       name: 'Лампочка на кухнє',
     });
+
+    this.properties = this.properties.concat([
+      new Property('on', {
+        label: 'Стан',
+        type: ePropertiesView.CHECKBOX,
+        getValue: () => this.state.on,
+        update: this.update.bind(this),
+      }),
+      new Property('color', {
+        label: 'Колір',
+        type: ePropertiesView.COLOR,
+        getValue: () => this.state.color,
+        update: this.update.bind(this),
+      }),
+      new Property('brightness', {
+        label: 'Яскравість',
+        type: ePropertiesView.SLIDER,
+        getValue: () => this.state.brightness,
+        update: this.update.bind(this),
+      }),
+    ]);
   }
 
   update<T>(value: T, property: Property) {

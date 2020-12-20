@@ -3,7 +3,7 @@ import { AppModel } from './model';
 import { tAppModel } from './types';
 
 export const getStore = () => {
-  const store = createStore<tAppModel>(AppModel, { injections: {} });
+  const store = createStore<tAppModel>(AppModel, { injections: {}, disableImmer: true });
 
   return store;
 };

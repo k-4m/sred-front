@@ -5,6 +5,7 @@ export interface iSmartThing<T = unknown> {
   getIcon(): string;
   getName(): string;
   getDevice(): string;
+  getId(): number;
 }
 
 export enum eFieldType {

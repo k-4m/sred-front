@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { action, computed, thunk } from 'easy-peasy';
 import { Lamp } from '../entities/Lamp';
 import { eSmartThing } from '../entities/types';
@@ -16,28 +15,38 @@ export const AppModel: tAppModel = {
     type: null,
     thing: null,
 
-    close: action((state) => {
-      state.type = null;
-      state.thing = null;
-      state.isOpen = false;
-    }),
-    open: action((state) => {
-      state.isOpen = true;
-    }),
-    changeType: action((state, type) => {
-      state.type = type;
-      if (type) {
-        state.thing = new {
+    close: action((state) => ({
+      ...state,
+      type: null,
+      thing: null,
+      isOpen: false,
+    })),
+    open: action((state) => ({
+      ...state,
+      isOpen: true,
+    })),
+    changeType: action((state, type) => ({
+      ...state,
+      type,
+      thing: type
+        ? new {
           [eSmartThing.LAMP]: Lamp,
-        }[type]();
-      } else {
-        state.thing = null;
-      }
-    }),
+        }[type]()
+        : null,
+    })),
 
     save: thunk((actions, _, { getState, getStoreActions }) => {
       getStoreActions().room.add(getState().thing!);
       actions.close();
+    }),
+
+    updateProperty: action((state, { id, value }) => {
+      state.thing
+        ?.getProperties()
+        .find((p) => p.id === id)
+        ?.update(value);
+
+      return { ...state };
     }),
   },
   emotion: {
@@ -53,19 +62,21 @@ export const AppModel: tAppModel = {
     },
     dominant: computed((state) => maxEmotion(state.current)),
 
-    update: action((state, data) => {
-      state.image = data.image;
-      state.current = data.current;
-    }),
+    update: action((state, data) => ({
+      ...state,
+      ...data,
+    })),
   },
 
   room: {
     things: [new Lamp()],
-    add: action((state, thing) => {
-      state.things.unshift(thing);
-    }),
-    remove: action((state, thing) => {
-      state.things.splice(state.things.indexOf(thing), 1);
-    }),
+    add: action((state, thing) => ({
+      ...state,
+      things: [thing].concat(state.things),
+    })),
+    remove: action((state, thing) => ({
+      ...state,
+      things: state.things.filter((v) => v !== thing),
+    })),
   },
 };
