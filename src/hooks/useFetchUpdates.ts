@@ -11,17 +11,17 @@ type tResponse = {
 };
 
 const fetchUpdates = async (): Promise<tResponse> => {
-  const response = await fetch('/data');
+  const response = await fetch('http://localhost:3001/data');
 
   return response.json();
 };
 
 // refetchInterval = undefined
-export const useFetchUpdates = () => {
+export const useFetchUpdates = (refetchInterval = 2000) => {
   const updateStoreData = useStoreActions((store) => store.emotion.update);
 
   useQuery('updates', fetchUpdates, {
-    // refetchInterval,
+    refetchInterval,
     onSuccess: (response) => {
       updateStoreData({
         image: response.image,

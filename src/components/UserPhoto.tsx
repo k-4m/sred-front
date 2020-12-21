@@ -11,9 +11,9 @@ export const UserPhoto: React.FC<tUserPhotoProps> = () => {
   const image = useStoreState((store) => store.emotion.image);
 
   return (
-    <Card elevation='large' width={!image ? 'medium' : undefined} pad={!image ? 'xlarge' : undefined}>
+    <Card elevation='large' width={'medium'} height={'medium'} pad={!image ? 'xlarge' : undefined}>
       <Box fill justify='center' align='center'>
-        {image ? <Image fit='cover' src={image} /> : <Spinner />}
+        {image ? <Image fit='cover' src={`data:image/jpeg;base64,${image}`} /> : <Spinner />}
       </Box>
     </Card>
   );
