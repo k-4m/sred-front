@@ -1,8 +1,11 @@
+import { EditCheckboxProperty } from '../components/CreationForm/propertiesEdit/EditCheckboxProperty';
 import { EditTextProperty } from '../components/CreationForm/propertiesEdit/EditTextProperty';
 import { PropertyAsCheckbox } from '../components/propertiesViews/PropertyAsCheckbox';
 import { PropertyAsColor } from '../components/propertiesViews/PropertyAsColor';
 import { PropertyAsSlider } from '../components/propertiesViews/PropertyAsSlider';
 import { PropertyAsText } from '../components/propertiesViews/PropertyAsText';
+import { eEmotion } from '../store/types';
+import { Trigger } from './Trigger';
 import { ePropertiesView } from './types';
 
 export type tPropertyConfig<T> = {
@@ -17,6 +20,8 @@ export class Property<T = any> {
   id: string;
 
   config: tPropertyConfig<T>;
+
+  triggers: Trigger<T>[] = [];
 
   constructor(id: string, config: tPropertyConfig<T>) {
     this.config = config;
@@ -42,7 +47,7 @@ export class Property<T = any> {
 
   get edit() {
     return ({
-      [ePropertiesView.CHECKBOX]: PropertyAsCheckbox,
+      [ePropertiesView.CHECKBOX]: EditCheckboxProperty,
       [ePropertiesView.COLOR]: PropertyAsColor,
       [ePropertiesView.SLIDER]: PropertyAsSlider,
       [ePropertiesView.TEXT]: EditTextProperty,
@@ -51,5 +56,17 @@ export class Property<T = any> {
 
   update(value: T) {
     this.config.update(value, this);
+  }
+
+  addTrigger(trigger: Trigger<T>) {
+    this.triggers.push(trigger);
+  }
+
+  trigger(emotion: eEmotion) {
+    this.triggers.forEach((t) => {
+      if (t.willTrigger(emotion)) {
+        this.update(t.value);
+      }
+    });
   }
 }

@@ -1,5 +1,10 @@
-import { action, computed, thunk } from 'easy-peasy';
+/* eslint-disable no-param-reassign */
+import {
+  action, computed, thunk, thunkOn,
+} from 'easy-peasy';
+import { emotions } from '../entities/index';
 import { Lamp } from '../entities/Lamp';
+import { eTriggerCondition, Trigger } from '../entities/Trigger';
 import { eSmartThing } from '../entities/types';
 import { eEmotion, tAppModel } from './types';
 
@@ -28,11 +33,7 @@ export const AppModel: tAppModel = {
     changeType: action((state, type) => ({
       ...state,
       type,
-      thing: type
-        ? new {
-          [eSmartThing.LAMP]: Lamp,
-        }[type]()
-        : null,
+      thing: type ? new { [eSmartThing.LAMP]: Lamp }[type]() : null,
     })),
 
     save: thunk((actions, _, { getState, getStoreActions }) => {
@@ -48,6 +49,32 @@ export const AppModel: tAppModel = {
 
       return { ...state };
     }),
+
+    addTrigger: action((state, { property }) => {
+      const usedCauses = property.triggers.map((t) => t.cause);
+      const unusedEmotions = emotions.filter((c) => usedCauses.indexOf(c) < 0);
+
+      property.addTrigger(new Trigger(eTriggerCondition.EQUAL, unusedEmotions[0], null));
+
+      return { ...state };
+    }),
+    removeTrigger: action((state, { trigger, property }) => {
+      property.triggers.splice(property.triggers.indexOf(trigger), 1);
+
+      return {
+        ...state,
+      };
+    }),
+    updateTrigger: action((state, { trigger, cause, value }) => {
+      if (cause !== undefined) {
+        trigger.cause = cause;
+      }
+      if (value !== undefined) {
+        trigger.value = value;
+      }
+
+      return { ...state };
+    }),
   },
   emotion: {
     image: '',
@@ -58,7 +85,7 @@ export const AppModel: tAppModel = {
       [eEmotion.HAPPY]: 0,
       [eEmotion.SAD]: 0,
       [eEmotion.SURPRISE]: 0,
-      [eEmotion.DISGUSTING]: 0,
+      [eEmotion.DISGUST]: 0,
     },
     dominant: computed((state) => maxEmotion(state.current)),
 
@@ -66,10 +93,33 @@ export const AppModel: tAppModel = {
       ...state,
       ...data,
     })),
+
+    onEmotionsUpdate: thunkOn(
+      (state) => state.update,
+      (_, __, { getStoreState, getStoreActions }) => {
+        const state = getStoreState();
+        // eslint-disable-next-line prefer-destructuring
+        const dominant = state.emotion.dominant;
+        const updateThing = getStoreActions().room.triggerThingUpdates;
+        const { things } = state.room;
+
+        things.forEach((thing) => updateThing({ thing, emotion: dominant }));
+      },
+    ),
   },
 
   room: {
-    things: [new Lamp()],
+    things: [
+      (() => {
+        const lamp = new Lamp();
+
+        lamp.properties
+          .find((p) => p.id === 'on')
+          ?.addTrigger(new Trigger(eTriggerCondition.EQUAL, eEmotion.DISGUST, false));
+
+        return lamp;
+      })(),
+    ],
     add: action((state, thing) => ({
       ...state,
       things: [thing].concat(state.things),
@@ -78,5 +128,15 @@ export const AppModel: tAppModel = {
       ...state,
       things: state.things.filter((v) => v !== thing),
     })),
+
+    triggerThingUpdates: action((state, { thing, emotion }) => {
+      thing.getProperties().forEach((p) => {
+        p.trigger(emotion);
+      });
+
+      return {
+        ...state,
+      };
+    }),
   },
 };

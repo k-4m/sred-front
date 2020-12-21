@@ -7,8 +7,7 @@ function base64_encode(file) {
   // read binary data
   const bitmap = fs.readFileSync(path.join(__dirname, file));
   // convert binary data to base64 encoded string
-  const buffer = new Buffer(bitmap).toString('base64');
-  return `data:image/jpg;base64,${buffer}`;
+  return new Buffer(bitmap).toString('base64');
 }
 
 const randEmotion = () => Math.random() * 100;

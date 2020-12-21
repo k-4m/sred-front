@@ -29,6 +29,24 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
             </PropertyContainer>
           ))}
       </Box>
+      <Box overflow='scroll'>
+        {thing
+          .getProperties()
+          .filter((p) => p.triggers.length > 0)
+          .map((p) => (
+            <Box key={p.id}>
+              {p.label}
+              <Box>
+                {p.triggers.map((t) => (
+                  <div key={t.cause}>
+                    if {t.condition}
+                    {t.cause} then {JSON.stringify(t.value)}
+                  </div>
+                ))}
+              </Box>
+            </Box>
+          ))}
+      </Box>
     </Box>
   );
 };

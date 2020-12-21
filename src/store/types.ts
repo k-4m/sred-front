@@ -1,10 +1,14 @@
-import { Action, Computed, Thunk } from 'easy-peasy';
+import {
+  Action, Computed, Thunk, ThunkOn,
+} from 'easy-peasy';
+import { Property } from '../entities/Property';
+import { Trigger } from '../entities/Trigger';
 import { eSmartThing, iSmartThing } from '../entities/types';
 
 export enum eEmotion {
   SAD = 'sad',
   HAPPY = 'happy',
-  DISGUSTING = 'disgusting',
+  DISGUST = 'disgust',
   FEAR = 'fear',
   NEUTRAL = 'neutral',
   SURPRISE = 'surprise',
@@ -16,6 +20,7 @@ export type tEmotionModel = {
   dominant: Computed<tEmotionModel, eEmotion>;
   current: Record<eEmotion, number>;
   update: Action<tEmotionModel, Pick<tEmotionModel, 'current' | 'image'>>;
+  onEmotionsUpdate: ThunkOn<tEmotionModel, void, tAppModel>;
 };
 
 export type tCreationForm = {
@@ -28,6 +33,9 @@ export type tCreationForm = {
   changeType: Action<tCreationForm, eSmartThing>;
   save: Thunk<tCreationForm, void, void, tAppModel>;
   updateProperty: Action<tCreationForm, { id: string; value: unknown }>;
+  addTrigger: Action<tCreationForm, { property: Property }>;
+  removeTrigger: Action<tCreationForm, { property: Property; trigger: Trigger }>;
+  updateTrigger: Action<tCreationForm, { trigger: Trigger; value?: any; cause?: eEmotion }>;
 };
 
 export type tRoomModel = {
@@ -35,6 +43,7 @@ export type tRoomModel = {
 
   add: Action<tRoomModel, iSmartThing>;
   remove: Action<tRoomModel, iSmartThing>;
+  triggerThingUpdates: Action<tRoomModel, { thing: iSmartThing; emotion: eEmotion }>;
 };
 
 export type tAppModel = {

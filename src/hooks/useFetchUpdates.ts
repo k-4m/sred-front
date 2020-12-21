@@ -9,11 +9,16 @@ type tResponse = {
     dominant_emotion: keyof tResponse['emotions_data']['emotion'];
   };
 };
+type tBrokenResponse = { message: string };
 
-const fetchUpdates = async (): Promise<tResponse> => {
-  const response = await fetch('http://localhost:3001/data');
+const fetchUpdates = async (): Promise<tResponse | tBrokenResponse> => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/data`);
 
-  return response.json();
+    return response.json();
+  } catch {
+    return { message: 'error' };
+  }
 };
 
 // refetchInterval = undefined
@@ -23,10 +28,12 @@ export const useFetchUpdates = (refetchInterval = 2000) => {
   useQuery('updates', fetchUpdates, {
     refetchInterval,
     onSuccess: (response) => {
-      updateStoreData({
-        image: response.image,
-        current: response.emotions_data.emotion,
-      });
+      if ('image' in response) {
+        updateStoreData({
+          image: response.image,
+          current: response.emotions_data.emotion,
+        });
+      }
     },
   });
 };
