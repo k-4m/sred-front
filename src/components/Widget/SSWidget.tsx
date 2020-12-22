@@ -25,7 +25,7 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
           .filter((p) => !p.config.hidden)
           .map((p) => (
             <PropertyContainer property={p} key={p.id}>
-              <p.view value={p.value} />
+              <p.view value={p.value} options={p.config.options} />
             </PropertyContainer>
           ))}
       </Box>

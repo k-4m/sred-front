@@ -7,7 +7,7 @@ type tChooseThingTypeProps = {
   // pass
 };
 
-const emotions: eSmartThing[] = [eSmartThing.LAMP];
+const things = Object.values(eSmartThing as Record<string, string>);
 
 export const ChooseThingType: React.FC<tChooseThingTypeProps> = () => {
   const type = useStoreState((store) => store.creationForm.type);
@@ -19,7 +19,7 @@ export const ChooseThingType: React.FC<tChooseThingTypeProps> = () => {
       name='select'
       placeholder='Оберіть тип розумної речі'
       value={type || undefined}
-      options={emotions}
+      options={things}
       onChange={({ value }) => changeType(value)}
     />
   );

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Anchor, Box } from 'grommet';
+import React from 'react';
 
 type tHeaderProps = {
   // p
@@ -15,9 +15,7 @@ export const Header: React.FC<tHeaderProps> = () => (
       align='center'
       pad={{ horizontal: 'small' }}
     >
-      <Anchor href='' label='Activity' margin='small' />
-      <Anchor href='' label='Utilization' margin='small' />
-      <Anchor href='' label='Virtual Machines' margin='small' />
+      <Anchor href='' label='Моя розумна кімната' margin='small' />
     </Box>
   </Box>
 );

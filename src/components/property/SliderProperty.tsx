@@ -7,9 +7,16 @@ type tSliderPropertyProps = {
   value: number;
   editable?: boolean;
   onChange?: (v: number) => void;
+  options?: {
+    symbol?: string;
+    min?: number;
+    max?: number;
+  };
 };
 
-export const SliderProperty: React.FC<tSliderPropertyProps> = ({ value, editable, onChange }) => (
+export const SliderProperty: React.FC<tSliderPropertyProps> = ({
+  value, editable, onChange, options,
+}) => (
   <Box direction='column'>
     <Stack anchor='center'>
       <Meter
@@ -22,7 +29,7 @@ export const SliderProperty: React.FC<tSliderPropertyProps> = ({ value, editable
       />
       <Box direction='row' align='center' pad={{ bottom: 'xsmall' }}>
         <Text>{value}</Text>
-        <Text size='xsmall'>%</Text>
+        <Text size='xsmall'>{options?.symbol ?? '%'}</Text>
       </Box>
     </Stack>
     {editable && (
@@ -30,8 +37,8 @@ export const SliderProperty: React.FC<tSliderPropertyProps> = ({ value, editable
         <RangeInput
           value={value}
           onChange={(event) => onChange && onChange(+event.target.value)}
-          min={0}
-          max={100}
+          min={options?.min ?? 0}
+          max={options?.max ?? 100}
           step={1}
         />
       </Box>

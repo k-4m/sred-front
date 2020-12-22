@@ -2,7 +2,11 @@
 import {
   action, computed, thunk, thunkOn,
 } from 'easy-peasy';
+import { AirConditioning } from '../entities/AirConditioning';
+import { Garland } from '../entities/Garland';
 import { Lamp } from '../entities/Lamp';
+import { Socket } from '../entities/Socket';
+import { Teapot } from '../entities/Teapot';
 import { eTriggerCondition, Trigger } from '../entities/Trigger';
 import { eSmartThing } from '../entities/types';
 import { eEmotion, tAppModel } from './types';
@@ -12,6 +16,14 @@ const maxEmotion = (currentEmotions: tAppModel['emotion']['current']) =>
     (a: eEmotion, b: eEmotion) => (currentEmotions[a] > currentEmotions[b] ? a : b),
     eEmotion.NEUTRAL,
   );
+
+const THING_TO_CLASS_MAP = {
+  [eSmartThing.LAMP]: Lamp,
+  [eSmartThing.TEAPOT]: Teapot,
+  [eSmartThing.AIR_CONDITIONING]: AirConditioning,
+  [eSmartThing.SOCKET]: Socket,
+  [eSmartThing.GARLAND]: Garland,
+};
 
 export const AppModel: tAppModel = {
   creationForm: {
@@ -32,7 +44,7 @@ export const AppModel: tAppModel = {
     changeType: action((state, type) => ({
       ...state,
       type,
-      thing: type ? new { [eSmartThing.LAMP]: Lamp }[type]() : null,
+      thing: type ? new THING_TO_CLASS_MAP[type]() : null,
     })),
 
     save: thunk((actions, _, { getState, getStoreActions }) => {
@@ -70,7 +82,7 @@ export const AppModel: tAppModel = {
     image: '',
     current: {
       [eEmotion.ANGRY]: 0,
-      [eEmotion.NEUTRAL]: 1,
+      [eEmotion.NEUTRAL]: 50,
       [eEmotion.FEAR]: 0,
       [eEmotion.HAPPY]: 0,
       [eEmotion.SAD]: 0,
@@ -99,17 +111,22 @@ export const AppModel: tAppModel = {
   },
 
   room: {
-    things: [
-      (() => {
-        const lamp = new Lamp();
+    things: Object.values(THING_TO_CLASS_MAP).map((C) => {
+      const thing = new C();
 
-        lamp.properties
-          .find((p) => p.id === 'on')
-          ?.addTrigger(new Trigger(eTriggerCondition.EQUAL, eEmotion.DISGUST, false));
+      thing.properties
+        .find((p) => p.id === 'on')
+        ?.addTrigger(
+          new Trigger(
+            eTriggerCondition.EQUAL,
+            Object.values(eEmotion)[~~(Math.random() * (Object.values(eEmotion).length - 1))],
+            false,
+          ),
+        );
 
-        return lamp;
-      })(),
-    ],
+      return thing;
+    }),
+
     add: action((state, thing) => ({
       ...state,
       things: [thing].concat(state.things),

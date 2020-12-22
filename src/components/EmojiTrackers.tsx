@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardBody,
   CardFooter,
@@ -12,6 +13,7 @@ import {
   ThemeContext,
 } from 'grommet';
 import React from 'react';
+import { EMOTION_LABEL } from '../constants';
 import { useStoreState } from '../store';
 
 type tEmojiTrackersProps = {
@@ -40,7 +42,7 @@ export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
               {sortedEmotions.map(([emotion, value], i) => (
                 <TableRow key={emotion}>
                   <TableCell>
-                    <Text color={i === 0 ? 'status-ok' : 'status-unknown'}>{emotion}</Text>
+                    <Text color={i === 0 ? 'status-ok' : 'status-unknown'}>{EMOTION_LABEL[emotion].split(' ')[1]}</Text>
                   </TableCell>
                   <TableCell>
                     <Meter
@@ -66,7 +68,9 @@ export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
         </CardBody>
         <CardFooter pad={{ horizontal: 'medium', vertical: 'small' }}>
           <Heading level={2} margin='none' size='small'>
-            Emotions
+            <Box width={'medium'}>
+              З вірогідністю {sortedEmotions[0][1].toFixed(2)}% у вас {EMOTION_LABEL[sortedEmotions[0][0]]}
+            </Box>
           </Heading>
         </CardFooter>
       </Card>

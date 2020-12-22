@@ -1,26 +1,24 @@
-import LampImgOff from '../components/Widget/images/lamp/light-off.png';
-import LampImgOn from '../components/Widget/images/lamp/light-on.png';
+import GarlandImgOff from '../components/Widget/images/garland/garland-off.svg';
+import GarlandImgOn from '../components/Widget/images/garland/garland-on.svg';
 import { Property } from './Property';
 import { SmartThing } from './SmartThing';
 import { ePropertiesView } from './types';
 
-type tLampState = {
+type tGarlandState = {
   on: boolean;
   color: string;
-  brightness: number;
 };
-export class Lamp extends SmartThing {
-  state: tLampState = {
+export class Garland extends SmartThing {
+  state: tGarlandState = {
     on: true,
-    color: '#FFEEA3',
-    brightness: 75,
+    color: '#883357',
   };
 
   constructor() {
     super({
-      device: 'Розумна лампа від Xiomi',
-      icon: LampImgOff,
-      name: 'Лампочка на кухнє',
+      device: 'Гірляндочка з Китаю',
+      icon: GarlandImgOff,
+      name: 'Освєщеніє настроєнія',
     });
 
     this.properties = this.properties.concat([
@@ -31,15 +29,9 @@ export class Lamp extends SmartThing {
         update: this.update.bind(this),
       }),
       new Property('color', {
-        label: 'Колір',
+        label: 'Палітра',
         type: ePropertiesView.COLOR,
         getValue: () => this.state.color,
-        update: this.update.bind(this),
-      }),
-      new Property('brightness', {
-        label: 'Яскравість',
-        type: ePropertiesView.SLIDER,
-        getValue: () => this.state.brightness,
         update: this.update.bind(this),
       }),
     ]);
@@ -50,6 +42,6 @@ export class Lamp extends SmartThing {
   }
 
   getIcon() {
-    return this.state.on ? LampImgOn : LampImgOff;
+    return this.state.on ? GarlandImgOn : GarlandImgOff;
   }
 }

@@ -12,7 +12,11 @@ export enum ePropertiesView {
 }
 
 export enum eSmartThing {
-  LAMP = 'lamp',
+  LAMP = 'лампочка',
+  TEAPOT = 'чайник',
+  AIR_CONDITIONING = 'кондиціонер',
+  SOCKET = 'розетка',
+  GARLAND = 'гірлянда',
 }
 
 export type tSmartThingConfig = {

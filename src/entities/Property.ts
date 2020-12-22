@@ -14,12 +14,14 @@ export type tPropertyConfig<T> = {
   getValue: () => T;
   update: (value: T, property: Property<T>) => void;
   hidden?: boolean;
+  options?: Record<string, number | string | boolean>;
 };
 
 export type tPropertyView<T> = {
   value: T;
   editable?: boolean;
   onChange?: (value: T) => void;
+  options?: Record<string, string | number | boolean>;
 };
 
 export class Property<T = any> {

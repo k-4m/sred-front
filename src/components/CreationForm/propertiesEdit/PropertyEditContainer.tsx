@@ -28,6 +28,7 @@ export const PropertyEditContainer: React.FC<tPropertyEditContainerProps> = ({ p
                 <View
                   value={trigger.value}
                   editable
+                  options={property.config.options}
                   onChange={(value) =>
                     updateTrigger({
                       trigger,
