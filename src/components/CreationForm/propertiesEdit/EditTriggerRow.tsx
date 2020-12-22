@@ -1,6 +1,7 @@
 import { Box, Button, Select } from 'grommet';
 import { Close as CloseIcon } from 'grommet-icons';
 import React from 'react';
+import { EMOTION_LABEL } from '../../../constants';
 import { Property } from '../../../entities/Property';
 import { Trigger } from '../../../entities/Trigger';
 import { useStoreActions } from '../../../store';
@@ -29,6 +30,7 @@ export const EditTriggerRow: React.FC<tEditTriggerRowProps> = ({ children, trigg
             })
           }
           placeholder='Emotion'
+          labelKey={(option) => EMOTION_LABEL[option].split(' ')[0]}
         />
         <Button
           onClick={() => removeTrigger({ property, trigger })}

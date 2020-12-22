@@ -1,9 +1,10 @@
 import {
-  Button, Card, CardBody, CardFooter, CardHeader, Heading, Text,
+  Button, Card, CardBody, CardFooter, CardHeader, Grommet, Heading, Text,
 } from 'grommet';
 import { Close } from 'grommet-icons';
 import React from 'react';
 import ReactModal from 'react-modal';
+import { theme } from '../theme';
 
 type tModalProps = {
   close: () => void;
@@ -33,19 +34,21 @@ export const Modal: React.FC<tModalProps> = ({
       },
     }}
   >
-    <Card background='white' pad='medium' width={'large'} elevation={'large'} round>
-      <CardHeader pad='small' fill={'horizontal'} direction='row' justify='between'>
-        <Heading size='xsmall' margin='none' level={3}>
-          <Text>{title}</Text>
-        </Heading>
-        <Button icon={<Close color='control' />} onClick={close} />
-      </CardHeader>
-      <CardBody pad='medium' overflow='scroll' height={{ max: 'large' }}>
-        {children}
-      </CardBody>
-      <CardFooter pad='medium' align='end' fill>
-        <Button type='submit' label='Зберегти' onClick={onSave} primary disabled={disableSave} />
-      </CardFooter>
-    </Card>
+    <Grommet theme={theme}>
+      <Card background='white' pad='medium' width={'large'} elevation={'large'} round>
+        <CardHeader pad='small' fill={'horizontal'} direction='row' justify='between' flex={false}>
+          <Heading size='xsmall' margin='none' level={3}>
+            <Text>{title}</Text>
+          </Heading>
+          <Button icon={<Close color='control' />} onClick={close} />
+        </CardHeader>
+        <CardBody pad='medium' overflow='scroll' height={{ max: 'large' }} flex={false}>
+          {children}
+        </CardBody>
+        <CardFooter pad='medium' align='end' fill flex={false}>
+          <Button type='submit' label='Зберегти' onClick={onSave} primary disabled={disableSave} />
+        </CardFooter>
+      </Card>
+    </Grommet>
   </ReactModal>
 );

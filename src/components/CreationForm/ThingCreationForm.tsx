@@ -11,7 +11,7 @@ type tThingCreationFormProps = {
 };
 
 export const ThingCreationForm: React.FC<tThingCreationFormProps> = ({ thing }) => (
-  <Box>
+  <Box flex={false}>
     <Box gap='small' align='center' direction='row' pad='small' fill>
       <SSImage image={thing.getIcon()} />
       <Box fill>

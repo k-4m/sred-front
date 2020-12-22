@@ -18,7 +18,7 @@ export class SmartThing {
 
   constructor(config: tSmartThingConfig) {
     this.config = config;
-    this.id = Date.now();
+    this.id = ~~(Math.random() * 10000000);
   }
 
   getName() {

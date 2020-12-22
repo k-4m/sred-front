@@ -69,7 +69,7 @@ export const EmojiTrackers: React.FC<tEmojiTrackersProps> = () => {
         <CardFooter pad={{ horizontal: 'medium', vertical: 'small' }}>
           <Heading level={2} margin='none' size='small'>
             <Box width={'medium'}>
-              З вірогідністю {sortedEmotions[0][1].toFixed(2)}% у вас {EMOTION_LABEL[sortedEmotions[0][0]]}
+              З ймовірністю {sortedEmotions[0][1].toFixed(2)}% у вас {EMOTION_LABEL[sortedEmotions[0][0]]}
             </Box>
           </Heading>
         </CardFooter>

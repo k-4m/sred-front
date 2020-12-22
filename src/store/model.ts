@@ -129,7 +129,7 @@ export const AppModel: tAppModel = {
 
     add: action((state, thing) => ({
       ...state,
-      things: [thing].concat(state.things),
+      things: [thing, ...state.things],
     })),
     remove: action((state, thing) => ({
       ...state,

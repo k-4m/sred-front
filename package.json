@@ -117,8 +117,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "eslint --fix src && prettier --write src"
+      "pre-commit": "lint-staged"
     }
   }
 }

@@ -17,12 +17,12 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
   const removeThing = useStoreActions((store) => store.room.remove);
 
   return (
-    <Box pad='medium' background='white' elevation='large' round fill>
-      <Box gap='xsmall' direction='row' justify='between'>
+    <Box pad='medium' background='white' elevation='large' round fill flex={false} overflow='scroll'>
+      <Box gap='xsmall' direction='row' justify='between' flex={false}>
         <SSIdentifier thing={thing} />
         <Button icon={<Trash />} color='status-error' hoverIndicator='light-1' onClick={() => removeThing(thing)} />
       </Box>
-      <Box direction='row' justify='start' gap='small' wrap>
+      <Box direction='row' justify='start' gap='small' wrap flex={false}>
         {thing
           .getProperties()
           .filter((p) => !p.config.hidden)
@@ -32,9 +32,9 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
             </PropertyContainer>
           ))}
       </Box>
-      <Accordion border={false}>
+      <Accordion border={false} flex={false}>
         <AccordionPanel label='Правила'>
-          <Box overflow='scroll'>
+          <Box>
             <Table>
               {thing
                 .getProperties()
@@ -44,7 +44,7 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
                     <TableRow key={p.id + t.cause}>
                       <TableCell>{EMOTION_LABEL[t.cause].split(' ')[1]}</TableCell>
                       <TableCell>{p.label}</TableCell>
-                      <TableCell> {'->'} </TableCell>
+                      <TableCell>{'->'}</TableCell>
                       <TableCell>
                         <p.view value={t.value} options={p.config.options} />
                       </TableCell>
