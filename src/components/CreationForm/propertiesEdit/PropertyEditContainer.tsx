@@ -20,29 +20,27 @@ export const PropertyEditContainer: React.FC<tPropertyEditContainerProps> = ({ p
         <Text size='medium'>{property.label}</Text>
       </Box>
       <Box direction='column' gap='small' fill>
-        {property.triggers
-          .sort((a, b) => a?.cause.localeCompare(b.cause) ?? -1)
-          .map((trigger) => (
-            <Box margin='small' key={trigger.cause} fill>
-              <EditTriggerRow trigger={trigger} property={property}>
-                <Box height={'100%'} justify='center'>
-                  <View
-                    value={trigger.value}
-                    editable
-                    options={property.config.options}
-                    onChange={(value) =>
-                      updateTrigger({
-                        trigger,
-                        property,
-                        cause: trigger.cause,
-                        value,
-                      })
-                    }
-                  />
-                </Box>
-              </EditTriggerRow>
-            </Box>
-          ))}
+        {property.triggers.map((trigger) => (
+          <Box margin='small' key={trigger.cause} fill>
+            <EditTriggerRow trigger={trigger} property={property}>
+              <Box height={'100%'} justify='center'>
+                <View
+                  value={trigger.value}
+                  editable
+                  options={property.config.options}
+                  onChange={(value) =>
+                    updateTrigger({
+                      trigger,
+                      property,
+                      cause: trigger.cause,
+                      value,
+                    })
+                  }
+                />
+              </Box>
+            </EditTriggerRow>
+          </Box>
+        ))}
         <Box align='center' fill>
           <AddTriggerBtn property={property} />
         </Box>
