@@ -12,9 +12,11 @@ export const CreationForm: React.FC<tCreationFormProps> = () => {
   const thing = useStoreState((store) => store.creationForm.thing);
 
   return (
-    <Box>
-      <ChooseThingType />
-      {thing && <ThingCreationForm thing={thing} />}
+    <Box direction='column'>
+      <Box flex={false}>
+        <ChooseThingType />
+      </Box>
+      <Box flex={false}>{thing && <ThingCreationForm thing={thing} />}</Box>
     </Box>
   );
 };

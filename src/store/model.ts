@@ -40,11 +40,8 @@ export const AppModel: tAppModel = {
       actions.close();
     }),
 
-    updateProperty: action((state, { id, value }) => {
-      state.thing
-        ?.getProperties()
-        .find((p) => p.id === id)
-        ?.update(value);
+    updateProperty: action((state, { property, value }) => {
+      property.update(value);
 
       return { ...state };
     }),

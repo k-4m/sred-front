@@ -1,4 +1,4 @@
-import { CheckBox } from 'grommet';
+import { Box, CheckBox } from 'grommet';
 import React from 'react';
 
 type tCheckboxPropertyProps = {
@@ -8,10 +8,7 @@ type tCheckboxPropertyProps = {
 };
 
 export const CheckboxProperty: React.FC<tCheckboxPropertyProps> = ({ onChange, value, editable }) => (
-  <CheckBox
-    toggle
-    checked={value}
-    onChange={(event) => onChange && onChange(event.target.checked)}
-    readOnly={!editable}
-  />
+  <Box justify='center' fill='vertical'>
+    <CheckBox checked={value} onChange={(event) => onChange && onChange(event.target.checked)} readOnly={!editable} />
+  </Box>
 );

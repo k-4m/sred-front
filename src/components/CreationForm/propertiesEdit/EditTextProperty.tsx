@@ -14,7 +14,7 @@ export const EditTextProperty: React.FC<tEditTextPropertyProps> = ({ property })
     <TextInput
       placeholder='type here'
       value={property.value}
-      onChange={(event) => updateProperty({ id: property.id, value: event.target.value })}
+      onChange={(event) => updateProperty({ property, value: event.target.value })}
     />
   );
 };

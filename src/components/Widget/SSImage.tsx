@@ -7,6 +7,6 @@ type tSSImageProps = {
 
 export const SSImage: React.FC<tSSImageProps> = ({ image }) => (
   <Box height='xxsmall' width='xxsmall'>
-    <Image src={image} fill />
+    <Image src={image} fit='cover' />
   </Box>
 );

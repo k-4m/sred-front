@@ -1,13 +1,13 @@
 import { Box, Button } from 'grommet';
 import { Trash } from 'grommet-icons';
 import React from 'react';
-import { iSmartThing } from '../../entities/types';
+import { SmartThing } from '../../entities/SmartThing';
 import { useStoreActions } from '../../store';
 import { PropertyContainer } from '../propertiesViews/PropertyContainer';
 import { SSIdentifier } from './SSIdentifier';
 
 type tWidgetProps = {
-  thing: iSmartThing;
+  thing: SmartThing;
 };
 
 export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {

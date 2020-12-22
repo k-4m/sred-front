@@ -1,4 +1,4 @@
-import { FormField, Select } from 'grommet';
+import { Select } from 'grommet';
 import React from 'react';
 import { eSmartThing } from '../../entities/types';
 import { useStoreActions, useStoreState } from '../../store';
@@ -14,15 +14,13 @@ export const ChooseThingType: React.FC<tChooseThingTypeProps> = () => {
   const changeType = useStoreActions((store) => store.creationForm.changeType);
 
   return (
-    <FormField label='Label' name='select'>
-      <Select
-        id='select'
-        name='select'
-        placeholder='Select'
-        value={type || undefined}
-        options={emotions}
-        onChange={({ value }) => changeType(value)}
-      />
-    </FormField>
+    <Select
+      id='select'
+      name='select'
+      placeholder='Оберіть тип розумної речі'
+      value={type || undefined}
+      options={emotions}
+      onChange={({ value }) => changeType(value)}
+    />
   );
 };

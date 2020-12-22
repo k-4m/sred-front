@@ -1,10 +1,10 @@
 import { Box, Text } from 'grommet';
 import React from 'react';
-import { iSmartThing } from '../../entities/types';
+import { SmartThing } from '../../entities/SmartThing';
 import { SSImage } from './SSImage';
 
 type tSSIdentifierProps = {
-  thing: iSmartThing;
+  thing: SmartThing;
 };
 
 export const SSIdentifier: React.FC<tSSIdentifierProps> = ({ thing }) => (

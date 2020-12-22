@@ -1,5 +1,5 @@
 import {
-  Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text,
+  Button, Card, CardBody, CardFooter, CardHeader, Heading, Text,
 } from 'grommet';
 import { Close } from 'grommet-icons';
 import React from 'react';
@@ -29,21 +29,22 @@ export const Modal: React.FC<tModalProps> = ({
         transform: 'translate(-50%, -50%)',
         border: 'none',
         background: 'none',
+        overflow: 'scroll',
       },
     }}
   >
-    <Card pad='medium' width={'large'} background='white' elevation={'large'} round>
+    <Card background='white' pad='medium' width={'large'} elevation={'large'} round>
       <CardHeader pad='small' fill={'horizontal'} direction='row' justify='between'>
         <Heading size='xsmall' margin='none' level={3}>
           <Text>{title}</Text>
         </Heading>
         <Button icon={<Close color='control' />} onClick={close} />
       </CardHeader>
-      <CardBody pad={'large'}>{children}</CardBody>
-      <CardFooter>
-        <Box flex={false} as='footer' align='start'>
-          <Button type='submit' label='Submit' onClick={onSave} primary disabled={disableSave} />
-        </Box>
+      <CardBody pad='medium' overflow='scroll' height={{ max: 'large' }}>
+        {children}
+      </CardBody>
+      <CardFooter pad='medium' align='end' fill>
+        <Button type='submit' label='Зберегти' onClick={onSave} primary disabled={disableSave} />
       </CardFooter>
     </Card>
   </ReactModal>

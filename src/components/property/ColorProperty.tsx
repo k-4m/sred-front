@@ -18,11 +18,12 @@ export const ColorProperty: React.FC<tColorPropertyProps> = ({ value, editable, 
         width='xxsmall'
         height='xxsmall'
         ref={boxRef}
+        overflow='hidden'
         background={value}
         pad='small'
         onClick={() => editable && setEditMode(true)}
         border={'all'}
-        round
+        round='full'
       />
       {boxRef.current && editMode && (
         <Drop target={boxRef.current} responsive onClickOutside={() => setEditMode(false)}>

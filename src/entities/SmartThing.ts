@@ -1,20 +1,20 @@
 import { Property } from './Property';
-import { ePropertiesView, iSmartThing, tSmartThingConfig } from './types';
+import { ePropertiesView, tSmartThingConfig } from './types';
 
-export class SmartThing implements iSmartThing {
+export class SmartThing {
   config: tSmartThingConfig;
 
   readonly id: number;
 
-  properties: Property[] = [
-    new Property('name', {
-      getValue: () => this.config.name,
-      label: 'Назва',
-      type: ePropertiesView.TEXT,
-      update: this.updateName.bind(this),
-      hidden: true,
-    }),
-  ];
+  name = new Property('name', {
+    getValue: () => this.config.name,
+    label: 'Назва',
+    type: ePropertiesView.TEXT,
+    update: this.updateName.bind(this),
+    hidden: true,
+  });
+
+  properties: Property[] = [];
 
   constructor(config: tSmartThingConfig) {
     this.config = config;
@@ -43,5 +43,9 @@ export class SmartThing implements iSmartThing {
 
   getId() {
     return this.id;
+  }
+
+  get nameProperty() {
+    return this.name;
   }
 }
