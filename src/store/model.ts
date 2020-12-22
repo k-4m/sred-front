@@ -2,7 +2,6 @@
 import {
   action, computed, thunk, thunkOn,
 } from 'easy-peasy';
-import { emotions } from '../entities/index';
 import { Lamp } from '../entities/Lamp';
 import { eTriggerCondition, Trigger } from '../entities/Trigger';
 import { eSmartThing } from '../entities/types';
@@ -51,27 +50,21 @@ export const AppModel: tAppModel = {
     }),
 
     addTrigger: action((state, { property }) => {
-      const usedCauses = property.triggers.map((t) => t.cause);
-      const unusedEmotions = emotions.filter((c) => usedCauses.indexOf(c) < 0);
-
-      property.addTrigger(new Trigger(eTriggerCondition.EQUAL, unusedEmotions[0], null));
+      property.addTrigger(new Trigger(eTriggerCondition.EQUAL, property.unusedTriggers[0], property.value));
 
       return { ...state };
     }),
     removeTrigger: action((state, { trigger, property }) => {
-      property.triggers.splice(property.triggers.indexOf(trigger), 1);
+      property.removeTrigger(trigger);
 
       return {
         ...state,
       };
     }),
-    updateTrigger: action((state, { trigger, cause, value }) => {
-      if (cause !== undefined) {
-        trigger.cause = cause;
-      }
-      if (value !== undefined) {
-        trigger.value = value;
-      }
+    updateTrigger: action((state, {
+      property, trigger, cause, value,
+    }) => {
+      property.updateTrigger(trigger, cause, value);
 
       return { ...state };
     }),

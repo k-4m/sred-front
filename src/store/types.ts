@@ -35,7 +35,7 @@ export type tCreationForm = {
   updateProperty: Action<tCreationForm, { id: string; value: unknown }>;
   addTrigger: Action<tCreationForm, { property: Property }>;
   removeTrigger: Action<tCreationForm, { property: Property; trigger: Trigger }>;
-  updateTrigger: Action<tCreationForm, { trigger: Trigger; value?: any; cause?: eEmotion }>;
+  updateTrigger: Action<tCreationForm, { trigger: Trigger; value?: any; cause?: eEmotion; property: Property }>;
 };
 
 export type tRoomModel = {

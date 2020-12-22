@@ -17,8 +17,8 @@ type tLampState = {
 export class Lamp extends SmartThing {
   state: tLampState = {
     on: true,
-    color: '#000',
-    brightness: 0,
+    color: '#FFEEA3',
+    brightness: 75,
   };
 
   constructor() {

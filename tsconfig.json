@@ -46,8 +46,9 @@
         "./src",
         "./declare.d/*",
         "src/mobile/views/components/ContinueShoppingButton",
-        "src/mobile/store/testing/.ts"
-, "delcalre.d.ts"    ],
+        "src/mobile/store/testing/.ts",
+        "delcalre.d.ts"
+    ],
     "exclude": [
         "**/*.spec.tsx?",
         "build"
