@@ -1,4 +1,5 @@
 import { ThemeType } from 'grommet';
+import { AddCircle, SubtractCircle } from 'grommet-icons';
 
 export const theme: ThemeType = {
   global: {
@@ -7,5 +8,12 @@ export const theme: ThemeType = {
       size: '20px',
       height: '22px',
     },
+  },
+  accordion: {
+    icons: {
+      collapse: SubtractCircle,
+      expand: AddCircle,
+    },
+    border: undefined,
   },
 };

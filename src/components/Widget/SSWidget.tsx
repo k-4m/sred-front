@@ -1,6 +1,9 @@
-import { Box, Button } from 'grommet';
+import {
+  Accordion, AccordionPanel, Box, Button, Table, TableCell, TableRow,
+} from 'grommet';
 import { Trash } from 'grommet-icons';
 import React from 'react';
+import { EMOTION_LABEL } from '../../constants';
 import { SmartThing } from '../../entities/SmartThing';
 import { useStoreActions } from '../../store';
 import { PropertyContainer } from '../propertiesViews/PropertyContainer';
@@ -29,24 +32,28 @@ export const SSWidget: React.FC<tWidgetProps> = ({ thing }) => {
             </PropertyContainer>
           ))}
       </Box>
-      <Box overflow='scroll'>
-        {thing
-          .getProperties()
-          .filter((p) => p.triggers.length > 0)
-          .map((p) => (
-            <Box key={p.id}>
-              {p.label}
-              <Box>
-                {p.triggers.map((t) => (
-                  <div key={t.cause}>
-                    if {t.condition}
-                    {t.cause} then {JSON.stringify(t.value)}
-                  </div>
-                ))}
-              </Box>
-            </Box>
-          ))}
-      </Box>
+      <Accordion border={false}>
+        <AccordionPanel label='Правила'>
+          <Box overflow='scroll'>
+            <Table>
+              {thing
+                .getProperties()
+                .filter((p) => p.triggers.length > 0)
+                .map((p) =>
+                  p.triggers.map((t) => (
+                    <TableRow key={p.id + t.cause}>
+                      <TableCell>{EMOTION_LABEL[t.cause].split(' ')[1]}</TableCell>
+                      <TableCell>{p.label}</TableCell>
+                      <TableCell> {'->'} </TableCell>
+                      <TableCell>
+                        <p.view value={t.value} options={p.config.options} />
+                      </TableCell>
+                    </TableRow>
+                  )))}
+            </Table>
+          </Box>
+        </AccordionPanel>
+      </Accordion>
     </Box>
   );
 };

@@ -22,7 +22,12 @@ export const SliderProperty: React.FC<tSliderPropertyProps> = ({
       <Meter
         type='bar'
         round
-        values={[{ value, color: 'status-warning' }]}
+        values={[
+          {
+            value: options?.min !== undefined ? ((value - options.min!) / (options.max! - options.min!)) * 100 : value,
+            color: 'status-warning',
+          },
+        ]}
         size='small'
         thickness='medium'
         background='light-2'

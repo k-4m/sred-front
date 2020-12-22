@@ -32,7 +32,7 @@ export class AirConditioning extends SmartThing {
         label: 'Температура',
         options: {
           symbol: '°',
-          min: 16,
+          min: 10,
           max: 30,
         },
         type: ePropertiesView.SLIDER,
